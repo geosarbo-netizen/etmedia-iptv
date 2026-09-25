@@ -1,198 +1,175 @@
-import asyncio
-import json
 import os
-import time
 from pathlib import Path
-from urllib.parse import urlparse
+from playwright.sync_api import sync_playwright
 
-from playwright.async_api import async_playwright
+BASE_URL = "https://tvplayer.etmedia.tv/web-player/#/tv"
+DEBUG_DIR = Path("debug")
+DEBUG_DIR.mkdir(exist_ok=True)
 
-PLAYER = "https://tvplayer.etmedia.tv/web-player/#/tv"
-CHANNELS_API = "https://tvplayer.etmedia.tv/tvipapi/json/channels.json"
-OUTPUT = Path("ETMedia.m3u")
+token = os.environ.get("ET_AUTH_TOKEN")
+profile_uid = os.environ.get("ET_PROFILE_UID")
+device_uid = os.environ.get("ET_DEVICE_UID")
 
-AUTH = os.environ["ET_AUTH_TOKEN"]
-PROFILE = os.environ["ET_PROFILE_UID"]
-DEVICE = os.environ["ET_DEVICE_UID"]
+if not all([token, profile_uid, device_uid]):
+    raise RuntimeError("Не заданы ET_AUTH_TOKEN / ET_PROFILE_UID / ET_DEVICE_UID")
 
-TVPLAYER_HOST = "tvplayer.etmedia.tv"
+def safe_text(s, limit=300):
+    s = (s or "").replace("\n", " ").replace("\r", " ")
+    return " ".join(s.split())[:limit]
 
-async def main():
-    headers = {
-        "auth-token": AUTH,
-        "profile-uid": PROFILE,
-        "device-uid": DEVICE,
-        "Referer": "https://tvplayer.etmedia.tv/web-player/",
-    }
+with sync_playwright() as p:
+    browser = p.chromium.launch(headless=True)
+    context = browser.new_context(
+        viewport={"width": 1440, "height": 1000},
+        user_agent="Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 "
+                   "(KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36",
+    )
 
-    async with async_playwright() as p:
-        browser = await p.chromium.launch(
-            headless=True,
-            args=["--no-sandbox", "--disable-dev-shm-usage"],
-        )
-        context = await browser.new_context(
-            viewport={"width": 1440, "height": 1000},
-            user_agent=(
-                "Mozilla/5.0 (Windows NT 10.0; Win64; x64) "
-                "AppleWebKit/537.36 (KHTML, like Gecko) "
-                "Chrome/140.0.0.0 Safari/537.36"
-            ),
-        )
+    def add_auth(route, request):
+        headers = dict(request.headers)
+        if "tvplayer.etmedia.tv" in request.url:
+            headers["auth-token"] = token
+            headers["profile-uid"] = profile_uid
+            headers["device-uid"] = device_uid
+        route.continue_(headers=headers)
 
-        # Add ET Media API authorization only to requests going to tvplayer.etmedia.tv.
-        async def route_handler(route):
-            req = route.request
-            u = req.url
-            if urlparse(u).netloc == TVPLAYER_HOST:
-                h = dict(req.headers)
-                h.update(headers)
-                await route.continue_(headers=h)
-            else:
-                await route.continue_()
+    context.route("**/*", add_auth)
 
-        await context.route("**/*", route_handler)
+    page = context.new_page()
 
-        page = await context.new_page()
-        await page.goto(PLAYER, wait_until="domcontentloaded", timeout=60000)
-        await page.wait_for_timeout(4000)
+    # Do not save request headers, URLs with query strings, or page HTML:
+    # those may contain authentication material.
+    frames_seen = []
+    stream_requests = []
 
-        # Get the same catalogue used by the web player.
-        result = await page.evaluate("""
-        async (url) => {
-            const r = await fetch(url, {headers: {
-              'auth-token': undefined
-            }});
-            if (!r.ok) throw new Error('channels.json HTTP ' + r.status);
-            return await r.json();
-        }
-        """, CHANNELS_API)
+    def on_request(request):
+        if "etm.etmedia.tv" in request.url and ".m3u8" in request.url:
+            stream_requests.append(request.url.split("?", 1)[0])
 
-        channels = result["response"]["channels"]
-        print(f"Каталог: {len(channels)} каналов")
+    page.on("request", on_request)
 
-        captured = {}
-        current_id = None
+    page.goto(BASE_URL, wait_until="domcontentloaded", timeout=120000)
+    page.wait_for_timeout(10000)
 
-        def on_request(req):
-            nonlocal current_id
-            u = req.url
-            if (
-                current_id is not None
-                and "etm.etmedia.tv/" in u
-                and ".m3u8" in u
-                and "token=" in u
-            ):
-                captured[current_id] = u.split("#", 1)[0]
-
-        page.on("request", on_request)
-
-        async def click_channel(ch):
-            title = ch.get("title", "")
-            number = str(ch.get("number", ""))
-
-            # Exact visible text is preferred; ET Media currently exposes
-            # channel titles in the player UI.
-            selectors = [
-                f'text="{title}"',
-                f'[aria-label="{title}"]',
-                f'[title="{title}"]',
-            ]
-
-            for sel in selectors:
-                try:
-                    loc = page.locator(sel).first
-                    if await loc.count():
-                        await loc.scroll_into_view_if_needed(timeout=1500)
-                        await loc.click(timeout=3000)
-                        return True
-                except Exception:
-                    pass
-
-            # DOM fallback: click a leaf element whose visible text is exactly
-            # the channel title.
-            try:
-                ok = await page.evaluate("""
-                (title) => {
-                  const els = [...document.querySelectorAll('button,a,[role="button"],div,span')];
-                  const el = els.find(e =>
-                    e.children.length === 0 &&
-                    e.textContent.trim() === title
-                  );
-                  if (!el) return false;
-                  el.scrollIntoView({block:'center'});
-                  el.click();
-                  return true;
-                }
-                """, title)
-                if ok:
-                    return True
-            except Exception:
-                pass
-
-            return False
-
-        # First pass: trigger each channel and capture its real authorized HLS URL.
-        for i, ch in enumerate(channels, 1):
-            if not ch.get("url", "").endswith("video.m3u8"):
-                continue
-
-            current_id = ch["id"]
-            before = captured.get(current_id)
-            print(f"[{i}/{len(channels)}] {ch.get('number')} {ch.get('title')} ...", flush=True)
-
-            ok = await click_channel(ch)
-            if not ok:
-                print("  click: FAIL")
-                continue
-
-            deadline = time.monotonic() + 6
-            while time.monotonic() < deadline:
-                if captured.get(current_id) and captured.get(current_id) != before:
+    # Load the public channel catalog through the authenticated context.
+    catalog = page.request.get(
+        "https://tvplayer.etmedia.tv/tvipapi/json/channels.json",
+        headers={
+            "auth-token": token,
+            "profile-uid": profile_uid,
+            "device-uid": device_uid,
+        },
+        timeout=60000,
+    )
+    catalog_status = catalog.status
+    catalog_text = catalog.text()
+    channel_count = 0
+    try:
+        import json
+        data = json.loads(catalog_text)
+        if isinstance(data, list):
+            channel_count = len(data)
+        elif isinstance(data, dict):
+            for key in ("channels", "data", "items"):
+                if isinstance(data.get(key), list):
+                    channel_count = len(data[key])
                     break
-                await page.wait_for_timeout(200)
+    except Exception:
+        pass
 
-            if captured.get(current_id):
-                print("  stream: OK")
-            else:
-                print("  stream: FAIL")
+    page.screenshot(path=str(DEBUG_DIR / "debug_page.png"), full_page=True)
 
-        page.remove_listener("request", on_request)
-        await browser.close()
+    info = []
+    info.append(f"PAGE_URL={page.url}")
+    info.append(f"PAGE_TITLE={safe_text(page.title(), 500)}")
+    info.append(f"CATALOG_HTTP_STATUS={catalog_status}")
+    info.append(f"CATALOG_CHANNEL_COUNT={channel_count}")
+    info.append(f"FRAME_COUNT={len(page.frames)}")
+    info.append("")
 
-    # Build the public playlist. Only channels for which the current run
-    # obtained an authorized tokenized URL are published.
-    lines = ["#EXTM3U"]
-    written = 0
-    for ch in channels:
-        u = captured.get(ch["id"])
-        if not u:
-            continue
+    info.append("=== FRAMES ===")
+    for i, frame in enumerate(page.frames):
+        info.append(f"[FRAME {i}] URL={frame.url}")
 
-        title = str(ch.get("title", "")).replace('"', "'")
-        number = str(ch.get("number", ""))
-        logo = ""
-        li = ch.get("logo_image")
-        if isinstance(li, dict):
-            logo = li.get("url") or ""
+    info.append("")
+    info.append("=== BODY TEXT (first 5000 chars) ===")
+    body_text = safe_text(page.locator("body").inner_text(timeout=15000), 5000)
+    info.append(body_text)
 
-        attrs = [f'tvg-name="{title}"']
-        if number:
-            attrs.append(f'channel-number="{number}"')
-        if logo:
-            attrs.append(f'tvg-logo="{logo}"')
+    info.append("")
+    info.append("=== VISIBLE CLICKABLE ELEMENTS ===")
 
-        lines.append("#EXTINF:-1 " + " ".join(attrs) + "," + title)
-        lines.append(u)
-        written += 1
+    js = r"""
+    () => {
+      const selectors = [
+        'button', 'a', '[role="button"]', '[role="link"]',
+        '[role="option"]', '[role="listitem"]',
+        '[ng-click]', '[onclick]',
+        '[tabindex]:not([tabindex="-1"])'
+      ];
+      const nodes = Array.from(document.querySelectorAll(selectors.join(',')));
+      const out = [];
+      for (const el of nodes) {
+        const r = el.getBoundingClientRect();
+        const cs = getComputedStyle(el);
+        if (!r.width || !r.height || cs.display === 'none' ||
+            cs.visibility === 'hidden' || cs.opacity === '0') continue;
 
-    if written < 150:
-        raise RuntimeError(
-            f"Получено только {written} каналов из {len(channels)}. "
-            "Плейлист не публикую, чтобы не заменить рабочий файл неполным."
+        const attrs = {};
+        for (const a of el.attributes) {
+          if (/^(class|id|role|aria-label|title|href|data-|ng-)/i.test(a.name)) {
+            attrs[a.name] = a.value.slice(0, 250);
+          }
+        }
+
+        out.push({
+          tag: el.tagName.toLowerCase(),
+          text: (el.innerText || el.textContent || '').replace(/\\s+/g, ' ').trim().slice(0, 200),
+          aria: (el.getAttribute('aria-label') || '').slice(0, 200),
+          title: (el.getAttribute('title') || '').slice(0, 200),
+          cls: (el.className && typeof el.className === 'string') ? el.className.slice(0, 300) : '',
+          attrs,
+          x: Math.round(r.x), y: Math.round(r.y),
+          w: Math.round(r.width), h: Math.round(r.height)
+        });
+      }
+      return out;
+    }
+    """
+    elements = page.evaluate(js)
+
+    for i, e in enumerate(elements[:500]):
+        info.append(
+            f"{i+1}. <{e['tag']}> "
+            f"text={e['text']!r} aria={e['aria']!r} title={e['title']!r} "
+            f"class={e['cls']!r} box=({e['x']},{e['y']},{e['w']},{e['h']}) "
+            f"attrs={e['attrs']}"
         )
 
-    OUTPUT.write_text("\n".join(lines) + "\n", encoding="utf-8")
-    print(f"Записано: {written} каналов -> {OUTPUT}")
+    info.append("")
+    info.append("=== IFRAMES IN DOM ===")
+    iframe_info = page.evaluate("""
+      () => Array.from(document.querySelectorAll('iframe')).map((x, i) => ({
+        i,
+        src: x.getAttribute('src') || '',
+        title: x.getAttribute('title') || '',
+        name: x.getAttribute('name') || '',
+        cls: typeof x.className === 'string' ? x.className : ''
+      }))
+    """)
+    for x in iframe_info:
+        info.append(str(x))
 
-if __name__ == "__main__":
-    asyncio.run(main())
+    info.append("")
+    info.append("=== M3U8 REQUESTS SEEN WHILE IDLE ===")
+    info.extend(sorted(set(stream_requests))[:100] or ["NONE"])
+
+    (DEBUG_DIR / "debug_elements.txt").write_text(
+        "\n".join(info), encoding="utf-8"
+    )
+
+    print("\n".join(info[:80]))
+    print(f"\nSaved diagnostics to {DEBUG_DIR}/")
+    print("The diagnostic intentionally does NOT print auth headers or tokenized URLs.")
+
+    browser.close()
