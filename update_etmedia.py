@@ -1,4 +1,5 @@
 import os
+import json
 from pathlib import Path
 from playwright.sync_api import sync_playwright
 
@@ -13,7 +14,7 @@ device_uid = os.environ.get("ET_DEVICE_UID")
 if not all([token, profile_uid, device_uid]):
     raise RuntimeError("Не заданы ET_AUTH_TOKEN / ET_PROFILE_UID / ET_DEVICE_UID")
 
-def safe_text(s, limit=300):
+def safe_text(s, limit=5000):
     s = (s or "").replace("\n", " ").replace("\r", " ")
     return " ".join(s.split())[:limit]
 
@@ -34,24 +35,31 @@ with sync_playwright() as p:
         route.continue_(headers=headers)
 
     context.route("**/*", add_auth)
-
     page = context.new_page()
 
-    # Do not save request headers, URLs with query strings, or page HTML:
-    # those may contain authentication material.
-    frames_seen = []
     stream_requests = []
-
     def on_request(request):
         if "etm.etmedia.tv" in request.url and ".m3u8" in request.url:
             stream_requests.append(request.url.split("?", 1)[0])
-
     page.on("request", on_request)
 
     page.goto(BASE_URL, wait_until="domcontentloaded", timeout=120000)
-    page.wait_for_timeout(10000)
+    page.wait_for_timeout(8000)
 
-    # Load the public channel catalog through the authenticated context.
+    # The previous diagnostic proved that the app stops at the profile chooser.
+    # The page is Flutter-rendered, so normal DOM text selectors do not expose
+    # the profile tile. The screenshot shows the "DOM" profile at this fixed
+    # viewport near x=570, y=550. Click that tile once.
+    page.screenshot(path=str(DEBUG_DIR / "01_profiles_before.png"), full_page=True)
+    before_url = page.url
+
+    page.mouse.click(570, 550)
+    page.wait_for_timeout(8000)
+
+    after_url = page.url
+    page.screenshot(path=str(DEBUG_DIR / "02_after_profile_click.png"), full_page=True)
+
+    # Authenticated catalog request, for diagnostics only.
     catalog = page.request.get(
         "https://tvplayer.etmedia.tv/tvipapi/json/channels.json",
         headers={
@@ -61,12 +69,11 @@ with sync_playwright() as p:
         },
         timeout=60000,
     )
-    catalog_status = catalog.status
-    catalog_text = catalog.text()
+
     channel_count = 0
+    catalog_preview = ""
     try:
-        import json
-        data = json.loads(catalog_text)
+        data = catalog.json()
         if isinstance(data, list):
             channel_count = len(data)
         elif isinstance(data, dict):
@@ -74,38 +81,31 @@ with sync_playwright() as p:
                 if isinstance(data.get(key), list):
                     channel_count = len(data[key])
                     break
+        catalog_preview = json.dumps(data, ensure_ascii=False)[:1000]
     except Exception:
-        pass
+        catalog_preview = safe_text(catalog.text(), 1000)
 
-    page.screenshot(path=str(DEBUG_DIR / "debug_page.png"), full_page=True)
+    info = [
+        f"BEFORE_URL={before_url}",
+        f"AFTER_PROFILE_CLICK_URL={after_url}",
+        f"PAGE_TITLE={safe_text(page.title(), 500)}",
+        f"CATALOG_HTTP_STATUS={catalog.status}",
+        f"CATALOG_CHANNEL_COUNT={channel_count}",
+        "",
+        "=== BODY TEXT ===",
+        safe_text(page.locator("body").inner_text(timeout=15000), 5000),
+        "",
+        "=== VISIBLE SEMANTICS / CLICKABLE ELEMENTS ===",
+    ]
 
-    info = []
-    info.append(f"PAGE_URL={page.url}")
-    info.append(f"PAGE_TITLE={safe_text(page.title(), 500)}")
-    info.append(f"CATALOG_HTTP_STATUS={catalog_status}")
-    info.append(f"CATALOG_CHANNEL_COUNT={channel_count}")
-    info.append(f"FRAME_COUNT={len(page.frames)}")
-    info.append("")
-
-    info.append("=== FRAMES ===")
-    for i, frame in enumerate(page.frames):
-        info.append(f"[FRAME {i}] URL={frame.url}")
-
-    info.append("")
-    info.append("=== BODY TEXT (first 5000 chars) ===")
-    body_text = safe_text(page.locator("body").inner_text(timeout=15000), 5000)
-    info.append(body_text)
-
-    info.append("")
-    info.append("=== VISIBLE CLICKABLE ELEMENTS ===")
-
+    # Flutter's accessibility/semantics tree may expose elements after the
+    # profile click. Collect only visible text/labels, not page HTML or headers.
     js = r"""
     () => {
       const selectors = [
+        'flt-semantics', 'flt-semantics-placeholder',
         'button', 'a', '[role="button"]', '[role="link"]',
-        '[role="option"]', '[role="listitem"]',
-        '[ng-click]', '[onclick]',
-        '[tabindex]:not([tabindex="-1"])'
+        '[role="option"]', '[role="listitem"]'
       ];
       const nodes = Array.from(document.querySelectorAll(selectors.join(',')));
       const out = [];
@@ -114,21 +114,11 @@ with sync_playwright() as p:
         const cs = getComputedStyle(el);
         if (!r.width || !r.height || cs.display === 'none' ||
             cs.visibility === 'hidden' || cs.opacity === '0') continue;
-
-        const attrs = {};
-        for (const a of el.attributes) {
-          if (/^(class|id|role|aria-label|title|href|data-|ng-)/i.test(a.name)) {
-            attrs[a.name] = a.value.slice(0, 250);
-          }
-        }
-
         out.push({
           tag: el.tagName.toLowerCase(),
           text: (el.innerText || el.textContent || '').replace(/\\s+/g, ' ').trim().slice(0, 200),
           aria: (el.getAttribute('aria-label') || '').slice(0, 200),
-          title: (el.getAttribute('title') || '').slice(0, 200),
-          cls: (el.className && typeof el.className === 'string') ? el.className.slice(0, 300) : '',
-          attrs,
+          role: (el.getAttribute('role') || ''),
           x: Math.round(r.x), y: Math.round(r.y),
           w: Math.round(r.width), h: Math.round(r.height)
         });
@@ -137,39 +127,26 @@ with sync_playwright() as p:
     }
     """
     elements = page.evaluate(js)
-
     for i, e in enumerate(elements[:500]):
         info.append(
-            f"{i+1}. <{e['tag']}> "
-            f"text={e['text']!r} aria={e['aria']!r} title={e['title']!r} "
-            f"class={e['cls']!r} box=({e['x']},{e['y']},{e['w']},{e['h']}) "
-            f"attrs={e['attrs']}"
+            f"{i+1}. <{e['tag']}> text={e['text']!r} "
+            f"aria={e['aria']!r} role={e['role']!r} "
+            f"box=({e['x']},{e['y']},{e['w']},{e['h']})"
         )
 
-    info.append("")
-    info.append("=== IFRAMES IN DOM ===")
-    iframe_info = page.evaluate("""
-      () => Array.from(document.querySelectorAll('iframe')).map((x, i) => ({
-        i,
-        src: x.getAttribute('src') || '',
-        title: x.getAttribute('title') || '',
-        name: x.getAttribute('name') || '',
-        cls: typeof x.className === 'string' ? x.className : ''
-      }))
-    """)
-    for x in iframe_info:
-        info.append(str(x))
-
-    info.append("")
-    info.append("=== M3U8 REQUESTS SEEN WHILE IDLE ===")
-    info.extend(sorted(set(stream_requests))[:100] or ["NONE"])
+    info += [
+        "",
+        "=== CATALOG PREVIEW (first 1000 chars) ===",
+        catalog_preview,
+        "",
+        "=== M3U8 REQUESTS ===",
+        *(sorted(set(stream_requests))[:100] or ["NONE"]),
+    ]
 
     (DEBUG_DIR / "debug_elements.txt").write_text(
         "\n".join(info), encoding="utf-8"
     )
 
-    print("\n".join(info[:80]))
-    print(f"\nSaved diagnostics to {DEBUG_DIR}/")
-    print("The diagnostic intentionally does NOT print auth headers or tokenized URLs.")
-
+    print("\n".join(info[:120]))
+    print("\nSaved diagnostic files to debug/")
     browser.close()
