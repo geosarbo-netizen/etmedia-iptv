@@ -1,0 +1,392 @@
+#EXTM3U
+#PLAYLIST:ET Media
+#EXTINF:-1 tvg-id="10" tvg-name="Первый HD" tvg-chno="1",Первый HD
+https://etm.etmedia.tv/perviy_hd/video.m3u8
+#EXTINF:-1 tvg-id="12" tvg-name="Россия HD" tvg-chno="2",Россия HD
+https://etm.etmedia.tv/rossiya_hd/video.m3u8
+#EXTINF:-1 tvg-id="51" tvg-name="Матч HD" tvg-chno="3",Матч HD
+https://etm.etmedia.tv/match_hd/video.m3u8
+#EXTINF:-1 tvg-id="52" tvg-name="НТВ" tvg-chno="4",НТВ
+https://etm.etmedia.tv/ntv/video.m3u8
+#EXTINF:-1 tvg-id="53" tvg-name="Пятый канал HD" tvg-chno="5",Пятый канал HD
+https://etm.etmedia.tv/5th/video.m3u8
+#EXTINF:-1 tvg-id="54" tvg-name="Россия К" tvg-chno="6",Россия К
+https://etm.etmedia.tv/rossiya_k/video.m3u8
+#EXTINF:-1 tvg-id="55" tvg-name="Россия 24" tvg-chno="7",Россия 24
+https://etm.etmedia.tv/rossiya_24/video.m3u8
+#EXTINF:-1 tvg-id="56" tvg-name="Карусель" tvg-chno="8",Карусель
+https://etm.etmedia.tv/karusel/video.m3u8
+#EXTINF:-1 tvg-id="47" tvg-name="ОТР" tvg-chno="9",ОТР
+https://etm.etmedia.tv/otr/video.m3u8
+#EXTINF:-1 tvg-id="153" tvg-name="ТВЦ" tvg-chno="10",ТВЦ
+https://etm.etmedia.tv/tvc/video.m3u8
+#EXTINF:-1 tvg-id="57" tvg-name="РЕН ТВ HD" tvg-chno="11",РЕН ТВ HD
+https://etm.etmedia.tv/ren_tv/video.m3u8
+#EXTINF:-1 tvg-id="58" tvg-name="Спас" tvg-chno="12",Спас
+https://etm.etmedia.tv/spas/video.m3u8
+#EXTINF:-1 tvg-id="59" tvg-name="СТС HD" tvg-chno="13",СТС HD
+https://etm.etmedia.tv/ctc_hd/video.m3u8
+#EXTINF:-1 tvg-id="61" tvg-name="Домашний HD" tvg-chno="14",Домашний HD
+https://etm.etmedia.tv/domashniy_hd/video.m3u8
+#EXTINF:-1 tvg-id="62" tvg-name="ТВ3 HD" tvg-chno="15",ТВ3 HD
+https://etm.etmedia.tv/tv3/video.m3u8
+#EXTINF:-1 tvg-id="63" tvg-name="Пятница HD" tvg-chno="16",Пятница HD
+https://etm.etmedia.tv/pyatnitsa/video.m3u8
+#EXTINF:-1 tvg-id="64" tvg-name="Звезда" tvg-chno="17",Звезда
+https://etm.etmedia.tv/zvezda/video.m3u8
+#EXTINF:-1 tvg-id="65" tvg-name="Мир HD" tvg-chno="18",Мир HD
+https://etm.etmedia.tv/mir/video.m3u8
+#EXTINF:-1 tvg-id="66" tvg-name="ТНТ HD" tvg-chno="19",ТНТ HD
+https://etm.etmedia.tv/tnt/video.m3u8
+#EXTINF:-1 tvg-id="67" tvg-name="Муз" tvg-chno="20",Муз
+https://etm.etmedia.tv/muz/video.m3u8
+#EXTINF:-1 tvg-id="100" tvg-name="Санкт-Петербург HD" tvg-chno="21",Санкт-Петербург HD
+https://etm.etmedia.tv/st_peterburg/video.m3u8
+#EXTINF:-1 tvg-id="273" tvg-name="Первый вегетарианский" tvg-chno="42",Первый вегетарианский
+https://etm.etmedia.tv/perviy_veg/video.m3u8
+#EXTINF:-1 tvg-id="309" tvg-name="Аппетитный HD" tvg-chno="43",Аппетитный HD
+https://etm.etmedia.tv/appetitniy_hd/video.m3u8
+#EXTINF:-1 tvg-id="39" tvg-name="FoodTime HD (Еда Премиум)" tvg-chno="44",FoodTime HD (Еда Премиум)
+https://etm.etmedia.tv/eda_hd/video.m3u8
+#EXTINF:-1 tvg-id="40" tvg-name="Дом Кино Премиум HD" tvg-chno="46",Дом Кино Премиум HD
+https://etm.etmedia.tv/dom_kino_premium_hd/video.m3u8
+#EXTINF:-1 tvg-id="41" tvg-name="КИНОСЕРИЯ HD" tvg-chno="48",КИНОСЕРИЯ HD
+https://etm.etmedia.tv/kinoseria/video.m3u8
+#EXTINF:-1 tvg-id="48" tvg-name="Детский (Уникум)" tvg-chno="56",Детский (Уникум)
+https://etm.etmedia.tv/detskiy/video.m3u8
+#EXTINF:-1 tvg-id="50" tvg-name="Мультиландия" tvg-chno="60",Мультиландия
+https://etm.etmedia.tv/multilandia/video.m3u8
+#EXTINF:-1 tvg-id="297" tvg-name="Baby Time" tvg-chno="62",Baby Time
+https://etm.etmedia.tv/baby_time/video.m3u8
+#EXTINF:-1 tvg-id="32" tvg-name="Оружие" tvg-chno="64",Оружие
+https://etm.etmedia.tv/oruzhie/video.m3u8
+#EXTINF:-1 tvg-id="36" tvg-name="Terra HD" tvg-chno="70",Terra HD
+https://etm.etmedia.tv/national_geographic_hd/video.m3u8
+#EXTINF:-1 tvg-id="38" tvg-name="Сапфир HD" tvg-chno="72",Сапфир HD
+https://etm.etmedia.tv/fox_life_hd/video.m3u8
+#EXTINF:-1 tvg-id="37" tvg-name="Кинеко HD" tvg-chno="74",Кинеко HD
+https://etm.etmedia.tv/fox_hd/video.m3u8
+#EXTINF:-1 tvg-id="265" tvg-name="Арт" tvg-chno="75",Арт
+https://etm.etmedia.tv/art/video.m3u8
+#EXTINF:-1 tvg-id="68" tvg-name="Психология 21" tvg-chno="76",Психология 21
+https://etm.etmedia.tv/psychology_21/video.m3u8
+#EXTINF:-1 tvg-id="69" tvg-name="FON Music (ТНТ Music)" tvg-chno="78",FON Music (ТНТ Music)
+https://etm.etmedia.tv/tnt_music/video.m3u8
+#EXTINF:-1 tvg-id="70" tvg-name="О! HD" tvg-chno="80",О! HD
+https://etm.etmedia.tv/o_channel/video.m3u8
+#EXTINF:-1 tvg-id="71" tvg-name="Суббота" tvg-chno="82",Суббота
+https://etm.etmedia.tv/super/video.m3u8
+#EXTINF:-1 tvg-id="72" tvg-name="2x2" tvg-chno="84",2x2
+https://etm.etmedia.tv/2x2/video.m3u8
+#EXTINF:-1 tvg-id="73" tvg-name="Европа Плюс" tvg-chno="86",Европа Плюс
+https://etm.etmedia.tv/europa_plus/video.m3u8
+#EXTINF:-1 tvg-id="74" tvg-name="КИНОУЖАС HD" tvg-chno="88",КИНОУЖАС HD
+https://etm.etmedia.tv/kinouzhas/video.m3u8
+#EXTINF:-1 tvg-id="272" tvg-name="Любимое кино HD" tvg-chno="89",Любимое кино HD
+https://etm.etmedia.tv/lubimoe_kino_hd/video.m3u8
+#EXTINF:-1 tvg-id="75" tvg-name="НАШЕ НОВОЕ КИНО HD" tvg-chno="90",НАШЕ НОВОЕ КИНО HD
+https://etm.etmedia.tv/nashe_novoe_kino/video.m3u8
+#EXTINF:-1 tvg-id="76" tvg-name="РОДНОЕ КИНО" tvg-chno="92",РОДНОЕ КИНО
+https://etm.etmedia.tv/rodnoe_kino/video.m3u8
+#EXTINF:-1 tvg-id="302" tvg-name="Киноливинг HD" tvg-chno="93",Киноливинг HD
+https://etm.etmedia.tv/kinoliving/video.m3u8
+#EXTINF:-1 tvg-id="77" tvg-name="Матч! Страна" tvg-chno="94",Матч! Страна
+https://etm.etmedia.tv/match_strana/video.m3u8
+#EXTINF:-1 tvg-id="78" tvg-name="КИНОКОМЕДИЯ" tvg-chno="96",КИНОКОМЕДИЯ
+https://etm.etmedia.tv/kinokomedia/video.m3u8
+#EXTINF:-1 tvg-id="271" tvg-name="Детский мир HD" tvg-chno="102",Детский мир HD
+https://etm.etmedia.tv/detskiy_mir_hd/video.m3u8
+#EXTINF:-1 tvg-id="82" tvg-name="Мама" tvg-chno="104",Мама
+https://etm.etmedia.tv/mama/video.m3u8
+#EXTINF:-1 tvg-id="298" tvg-name="duckTV HD" tvg-chno="105",duckTV HD
+https://etm.etmedia.tv/duckTV/video.m3u8
+#EXTINF:-1 tvg-id="83" tvg-name="Кино ТВ HD" tvg-chno="106",Кино ТВ HD
+https://etm.etmedia.tv/kino_tv_hd/video.m3u8
+#EXTINF:-1 tvg-id="84" tvg-name="Моя планета" tvg-chno="108",Моя планета
+https://etm.etmedia.tv/my_planet/video.m3u8
+#EXTINF:-1 tvg-id="85" tvg-name="Наука 2.0" tvg-chno="110",Наука 2.0
+https://etm.etmedia.tv/nauka_20/video.m3u8
+#EXTINF:-1 tvg-id="86" tvg-name="Русский бестселлер" tvg-chno="112",Русский бестселлер
+https://etm.etmedia.tv/rus_best/video.m3u8
+#EXTINF:-1 tvg-id="87" tvg-name="Русский иллюзион" tvg-chno="114",Русский иллюзион
+https://etm.etmedia.tv/rus_illusion/video.m3u8
+#EXTINF:-1 tvg-id="88" tvg-name="Иллюзион+" tvg-chno="116",Иллюзион+
+https://etm.etmedia.tv/illusion_plus/video.m3u8
+#EXTINF:-1 tvg-id="89" tvg-name="Мульт" tvg-chno="118",Мульт
+https://etm.etmedia.tv/mult/video.m3u8
+#EXTINF:-1 tvg-id="90" tvg-name="СТС Love" tvg-chno="120",СТС Love
+https://etm.etmedia.tv/ctc_love/video.m3u8
+#EXTINF:-1 tvg-id="91" tvg-name="Солнце" tvg-chno="122",Солнце
+https://etm.etmedia.tv/disney/video.m3u8
+#EXTINF:-1 tvg-id="92" tvg-name="Че" tvg-chno="124",Че
+https://etm.etmedia.tv/che/video.m3u8
+#EXTINF:-1 tvg-id="93" tvg-name="78 HD" tvg-chno="126",78 HD
+https://etm.etmedia.tv/78_hd/video.m3u8
+#EXTINF:-1 tvg-id="94" tvg-name="КИНОМИКС HD" tvg-chno="128",КИНОМИКС HD
+https://etm.etmedia.tv/kinomix/video.m3u8
+#EXTINF:-1 tvg-id="96" tvg-name="РБК HD" tvg-chno="132",РБК HD
+https://etm.etmedia.tv/rbc/video.m3u8
+#EXTINF:-1 tvg-id="222" tvg-name="КХЛ Prime HD" tvg-chno="136",КХЛ Prime HD
+https://etm.etmedia.tv/khl_hd/video.m3u8
+#EXTINF:-1 tvg-id="99" tvg-name="КХЛ" tvg-chno="138",КХЛ
+https://etm.etmedia.tv/khl/video.m3u8
+#EXTINF:-1 tvg-id="101" tvg-name="ЛенТВ24 HD" tvg-chno="140",ЛенТВ24 HD
+https://etm.etmedia.tv/lentv24_hd/video.m3u8
+#EXTINF:-1 tvg-id="102" tvg-name="Кухня ТВ HD" tvg-chno="142",Кухня ТВ HD
+https://etm.etmedia.tv/kuhnya_tv/video.m3u8
+#EXTINF:-1 tvg-id="275" tvg-name="Успех" tvg-chno="144",Успех
+https://etm.etmedia.tv/uspeh/video.m3u8
+#EXTINF:-1 tvg-id="285" tvg-name="МотоДрайв HD" tvg-chno="147",МотоДрайв HD
+https://etm.etmedia.tv/motodrive/video.m3u8
+#EXTINF:-1 tvg-id="105" tvg-name="Союз" tvg-chno="148",Союз
+https://etm.etmedia.tv/soyuz/video.m3u8
+#EXTINF:-1 tvg-id="252" tvg-name="Авто24 HD" tvg-chno="149",Авто24 HD
+https://etm.etmedia.tv/avto24_hd/video.m3u8
+#EXTINF:-1 tvg-id="106" tvg-name="Автоплюс" tvg-chno="150",Автоплюс
+https://etm.etmedia.tv/avtoplus/video.m3u8
+#EXTINF:-1 tvg-id="253" tvg-name="Драйв HD" tvg-chno="151",Драйв HD
+https://etm.etmedia.tv/draiv_hd/video.m3u8
+#EXTINF:-1 tvg-id="107" tvg-name="ТНТ4" tvg-chno="152",ТНТ4
+https://etm.etmedia.tv/tnt4/video.m3u8
+#EXTINF:-1 tvg-id="108" tvg-name="Мужской: охота и рыбалка" tvg-chno="154",Мужской: охота и рыбалка
+https://etm.etmedia.tv/muzhskoy/video.m3u8
+#EXTINF:-1 tvg-id="109" tvg-name="Travel+Adventure HD" tvg-chno="156",Travel+Adventure HD
+https://etm.etmedia.tv/travel_adventure_hd/video.m3u8
+#EXTINF:-1 tvg-id="276" tvg-name="#КтоКуда" tvg-chno="157",#КтоКуда
+https://etm.etmedia.tv/mir_uvlech/video.m3u8
+#EXTINF:-1 tvg-id="110" tvg-name="365 HD" tvg-chno="158",365 HD
+https://etm.etmedia.tv/365/video.m3u8
+#EXTINF:-1 tvg-id="112" tvg-name="Ювелирочка" tvg-chno="160",Ювелирочка
+https://etm.etmedia.tv/juvelirochka/video.m3u8
+#EXTINF:-1 tvg-id="146" tvg-name="BRIDGE" tvg-chno="161",BRIDGE
+https://etm.etmedia.tv/bridge/video.m3u8
+#EXTINF:-1 tvg-id="240" tvg-name="BRIDGE Rock HD" tvg-chno="162",BRIDGE Rock HD
+https://etm.etmedia.tv/bridge_rock/video.m3u8
+#EXTINF:-1 tvg-id="113" tvg-name="BRIDGE Русский хит HD" tvg-chno="163",BRIDGE Русский хит HD
+https://etm.etmedia.tv/bridge_russ_hit/video.m3u8
+#EXTINF:-1 tvg-id="241" tvg-name="BRIDGE Этно HD" tvg-chno="164",BRIDGE Этно HD
+https://etm.etmedia.tv/bridge_etno/video.m3u8
+#EXTINF:-1 tvg-id="232" tvg-name="BRIDGE Classic" tvg-chno="165",BRIDGE Classic
+https://etm.etmedia.tv/bridge_classic/video.m3u8
+#EXTINF:-1 tvg-id="114" tvg-name="BRIDGE Hits HD" tvg-chno="166",BRIDGE Hits HD
+https://etm.etmedia.tv/bridge_hits/video.m3u8
+#EXTINF:-1 tvg-id="242" tvg-name="BRIDGE Шлягер" tvg-chno="167",BRIDGE Шлягер
+https://etm.etmedia.tv/bridge_shlyager/video.m3u8
+#EXTINF:-1 tvg-id="304" tvg-name="BRIDGE Deluxe HD" tvg-chno="168",BRIDGE Deluxe HD
+https://etm.etmedia.tv/bridge_deluxe/video.m3u8
+#EXTINF:-1 tvg-id="115" tvg-name="RT Doc HD" tvg-chno="170",RT Doc HD
+https://etm.etmedia.tv/rt_d_hd/video.m3u8
+#EXTINF:-1 tvg-id="117" tvg-name="ЛДПР ТВ" tvg-chno="172",ЛДПР ТВ
+https://etm.etmedia.tv/ldpr/video.m3u8
+#EXTINF:-1 tvg-id="119" tvg-name="Ю" tvg-chno="176",Ю
+https://etm.etmedia.tv/u_tv/video.m3u8
+#EXTINF:-1 tvg-id="120" tvg-name="RU.TV" tvg-chno="178",RU.TV
+https://etm.etmedia.tv/ru_tv/video.m3u8
+#EXTINF:-1 tvg-id="121" tvg-name="viju TV1000 HD" tvg-chno="180",viju TV1000 HD
+https://etm.etmedia.tv/tv_1000/video.m3u8
+#EXTINF:-1 tvg-id="122" tvg-name="viju Explore HD" tvg-chno="182",viju Explore HD
+https://etm.etmedia.tv/viasat_explore/video.m3u8
+#EXTINF:-1 tvg-id="123" tvg-name="viju History HD" tvg-chno="184",viju History HD
+https://etm.etmedia.tv/viasat_history/video.m3u8
+#EXTINF:-1 tvg-id="124" tvg-name="viju TV1000 русское HD" tvg-chno="186",viju TV1000 русское HD
+https://etm.etmedia.tv/tv_1000_rus_kino/video.m3u8
+#EXTINF:-1 tvg-id="126" tvg-name="viju Nature HD" tvg-chno="190",viju Nature HD
+https://etm.etmedia.tv/viasat_nature/video.m3u8
+#EXTINF:-1 tvg-id="127" tvg-name="viju Sport" tvg-chno="192",viju Sport
+https://etm.etmedia.tv/viasat_sport/video.m3u8
+#EXTINF:-1 tvg-id="128" tvg-name="Da Vinci" tvg-chno="194",Da Vinci
+https://etm.etmedia.tv/da_vinci/video.m3u8
+#EXTINF:-1 tvg-id="125" tvg-name="viju TV1000 action HD" tvg-chno="199",viju TV1000 action HD
+https://etm.etmedia.tv/tv_1000_action/video.m3u8
+#EXTINF:-1 tvg-id="129" tvg-name="Теледом HD" tvg-chno="200",Теледом HD
+https://etm.etmedia.tv/teledom_hd/video.m3u8
+#EXTINF:-1 tvg-id="282" tvg-name="Неизвестная Россия HD" tvg-chno="201",Неизвестная Россия HD
+https://etm.etmedia.tv/neizvest_rossia_hd/video.m3u8
+#EXTINF:-1 tvg-id="130" tvg-name="RTG HD" tvg-chno="202",RTG HD
+https://etm.etmedia.tv/rtg_hd/video.m3u8
+#EXTINF:-1 tvg-id="229" tvg-name="Конгресс ТВ HD" tvg-chno="203",Конгресс ТВ HD
+https://etm.etmedia.tv/congress/video.m3u8
+#EXTINF:-1 tvg-id="133" tvg-name="Загородная Жизнь" tvg-chno="204",Загородная Жизнь
+https://etm.etmedia.tv/zagorodnaya_zhizn/video.m3u8
+#EXTINF:-1 tvg-id="251" tvg-name="Усадьба HD" tvg-chno="205",Усадьба HD
+https://etm.etmedia.tv/usadba_hd/video.m3u8
+#EXTINF:-1 tvg-id="134" tvg-name="Матч Арена HD" tvg-chno="206",Матч Арена HD
+https://etm.etmedia.tv/match_arena_hd/video.m3u8
+#EXTINF:-1 tvg-id="135" tvg-name="Матч Боец HD" tvg-chno="208",Матч Боец HD
+https://etm.etmedia.tv/match_boets/video.m3u8
+#EXTINF:-1 tvg-id="136" tvg-name="ИНДИЙСКОЕ КИНО" tvg-chno="210",ИНДИЙСКОЕ КИНО
+https://etm.etmedia.tv/indijskoe_kino/video.m3u8
+#EXTINF:-1 tvg-id="137" tvg-name="Поехали HD" tvg-chno="212",Поехали HD
+https://etm.etmedia.tv/poehali/video.m3u8
+#EXTINF:-1 tvg-id="138" tvg-name="Бобер HD" tvg-chno="214",Бобер HD
+https://etm.etmedia.tv/bober/video.m3u8
+#EXTINF:-1 tvg-id="139" tvg-name="Дом Кино HD" tvg-chno="216",Дом Кино HD
+https://etm.etmedia.tv/dom_kino/video.m3u8
+#EXTINF:-1 tvg-id="140" tvg-name="Музыка Первого HD" tvg-chno="218",Музыка Первого HD
+https://etm.etmedia.tv/muzika/video.m3u8
+#EXTINF:-1 tvg-id="264" tvg-name="Жара ТВ HD" tvg-chno="219",Жара ТВ HD
+https://etm.etmedia.tv/zhara_hd/video.m3u8
+#EXTINF:-1 tvg-id="141" tvg-name="Мир 24 HD" tvg-chno="220",Мир 24 HD
+https://etm.etmedia.tv/mir_24_hd/video.m3u8
+#EXTINF:-1 tvg-id="255" tvg-name="Ретро" tvg-chno="221",Ретро
+https://etm.etmedia.tv/retro/video.m3u8
+#EXTINF:-1 tvg-id="142" tvg-name="Красная линия" tvg-chno="222",Красная линия
+https://etm.etmedia.tv/red_line/video.m3u8
+#EXTINF:-1 tvg-id="143" tvg-name="1HD" tvg-chno="224",1HD
+https://etm.etmedia.tv/1hd/video.m3u8
+#EXTINF:-1 tvg-id="144" tvg-name="AIVA HD" tvg-chno="226",AIVA HD
+https://etm.etmedia.tv/aiva/video.m3u8
+#EXTINF:-1 tvg-id="296" tvg-name="Clubbing HD" tvg-chno="227",Clubbing HD
+https://etm.etmedia.tv/clubbing/video.m3u8
+#EXTINF:-1 tvg-id="145" tvg-name="Известия HD" tvg-chno="228",Известия HD
+https://etm.etmedia.tv/iz_hd/video.m3u8
+#EXTINF:-1 tvg-id="243" tvg-name="Телеканал 360 HD" tvg-chno="230",Телеканал 360 HD
+https://etm.etmedia.tv/telekanal_360/video.m3u8
+#EXTINF:-1 tvg-id="258" tvg-name="360 Новости" tvg-chno="232",360 Новости
+https://etm.etmedia.tv/360_novosti/video.m3u8
+#EXTINF:-1 tvg-id="151" tvg-name="English Club HD" tvg-chno="240",English Club HD
+https://etm.etmedia.tv/english_club/video.m3u8
+#EXTINF:-1 tvg-id="286" tvg-name="The Explorers HD" tvg-chno="241",The Explorers HD
+https://etm.etmedia.tv/the_explorers/video.m3u8
+#EXTINF:-1 tvg-id="152" tvg-name="Еврокино" tvg-chno="242",Еврокино
+https://etm.etmedia.tv/eurocinema/video.m3u8
+#EXTINF:-1 tvg-id="254" tvg-name="Охота и рыбалка HD" tvg-chno="243",Охота и рыбалка HD
+https://etm.etmedia.tv/okhota_i_rybalka_hd/video.m3u8
+#EXTINF:-1 tvg-id="154" tvg-name="Дикая охота HD" tvg-chno="244",Дикая охота HD
+https://etm.etmedia.tv/dikaya_okhota_hd/video.m3u8
+#EXTINF:-1 tvg-id="155" tvg-name="Дикая рыбалка HD" tvg-chno="245",Дикая рыбалка HD
+https://etm.etmedia.tv/dikaya_rybalka_hd/video.m3u8
+#EXTINF:-1 tvg-id="235" tvg-name="Глазами туриста 4К" tvg-chno="246",Глазами туриста 4К
+https://etm.etmedia.tv/glazami_turista_UHD/video.m3u8
+#EXTINF:-1 tvg-id="248" tvg-name="Глазами туриста HD" tvg-chno="247",Глазами туриста HD
+https://etm.etmedia.tv/glazami_turista_hd/video.m3u8
+#EXTINF:-1 tvg-id="247" tvg-name="Живи активно HD" tvg-chno="248",Живи активно HD
+https://etm.etmedia.tv/zhivi_aktivno_hd/video.m3u8
+#EXTINF:-1 tvg-id="213" tvg-name="Amedia Hit HD" tvg-chno="273",Amedia Hit HD
+https://etm.etmedia.tv/amedia_hit_hd/video.m3u8
+#EXTINF:-1 tvg-id="169" tvg-name="Мосфильм HD" tvg-chno="274",Мосфильм HD
+https://etm.etmedia.tv/mosfilm/video.m3u8
+#EXTINF:-1 tvg-id="250" tvg-name="Госфильмофонд. Машина времени HD" tvg-chno="275",Госфильмофонд. Машина времени HD
+https://etm.etmedia.tv/mashina_vremeni_hd/video.m3u8
+#EXTINF:-1 tvg-id="301" tvg-name="Кино и Жизнь HD" tvg-chno="276",Кино и Жизнь HD
+https://etm.etmedia.tv/kino_i_zhizn/video.m3u8
+#EXTINF:-1 tvg-id="170" tvg-name="ТОЧКА.РФ (HD Life)" tvg-chno="277",ТОЧКА.РФ (HD Life)
+https://etm.etmedia.tv/hd_life/video.m3u8
+#EXTINF:-1 tvg-id="287" tvg-name="LEOMAX24" tvg-chno="278",LEOMAX24
+https://etm.etmedia.tv/leomax24_hd/video.m3u8
+#EXTINF:-1 tvg-id="174" tvg-name="Flix Snip" tvg-chno="286",Flix Snip
+https://etm.etmedia.tv/flix_snip/video.m3u8
+#EXTINF:-1 tvg-id="175" tvg-name="Trace Sport Stars HD" tvg-chno="288",Trace Sport Stars HD
+https://etm.etmedia.tv/trace_sport_stars/video.m3u8
+#EXTINF:-1 tvg-id="176" tvg-name="Живая планета" tvg-chno="290",Живая планета
+https://etm.etmedia.tv/zhiv_planeta/video.m3u8
+#EXTINF:-1 tvg-id="177" tvg-name="Русский детектив" tvg-chno="292",Русский детектив
+https://etm.etmedia.tv/rus_detektiv/video.m3u8
+#EXTINF:-1 tvg-id="274" tvg-name="Мир сериала" tvg-chno="294",Мир сериала
+https://etm.etmedia.tv/mir_seriala/video.m3u8
+#EXTINF:-1 tvg-id="181" tvg-name="Телекафе HD" tvg-chno="300",Телекафе HD
+https://etm.etmedia.tv/telecafe/video.m3u8
+#EXTINF:-1 tvg-id="182" tvg-name="Время HD" tvg-chno="302",Время HD
+https://etm.etmedia.tv/vremya/video.m3u8
+#EXTINF:-1 tvg-id="184" tvg-name="Hollywood HD" tvg-chno="306",Hollywood HD
+https://etm.etmedia.tv/hollywood_hd/video.m3u8
+#EXTINF:-1 tvg-id="185" tvg-name="Звезда Плюс" tvg-chno="308",Звезда Плюс
+https://etm.etmedia.tv/Zvezda_plus/video.m3u8
+#EXTINF:-1 tvg-id="303" tvg-name="Сага ТВ HD" tvg-chno="309",Сага ТВ HD
+https://etm.etmedia.tv/saga/video.m3u8
+#EXTINF:-1 tvg-id="186" tvg-name="Дорама HD" tvg-chno="310",Дорама HD
+https://etm.etmedia.tv/Dorama/video.m3u8
+#EXTINF:-1 tvg-id="234" tvg-name="Сумико HD" tvg-chno="311",Сумико HD
+https://etm.etmedia.tv/sumiko_hd/video.m3u8
+#EXTINF:-1 tvg-id="187" tvg-name="В гостях у сказки HD" tvg-chno="312",В гостях у сказки HD
+https://etm.etmedia.tv/v_gostjah_u_skazki/video.m3u8
+#EXTINF:-1 tvg-id="188" tvg-name="Galaxy HD" tvg-chno="314",Galaxy HD
+https://etm.etmedia.tv/Galaxy_HD/video.m3u8
+#EXTINF:-1 tvg-id="189" tvg-name="Театр HD" tvg-chno="316",Театр HD
+https://etm.etmedia.tv/Teatr_HD/video.m3u8
+#EXTINF:-1 tvg-id="190" tvg-name="ЕГЭ ТВ" tvg-chno="318",ЕГЭ ТВ
+https://etm.etmedia.tv/EGE/video.m3u8
+#EXTINF:-1 tvg-id="291" tvg-name=".sci-fi HD" tvg-chno="321",.sci-fi HD
+https://etm.etmedia.tv/sci_fi_hd/video.m3u8
+#EXTINF:-1 tvg-id="289" tvg-name=".red HD" tvg-chno="322",.red HD
+https://etm.etmedia.tv/red_hd/video.m3u8
+#EXTINF:-1 tvg-id="290" tvg-name=".black HD" tvg-chno="323",.black HD
+https://etm.etmedia.tv/black_hd/video.m3u8
+#EXTINF:-1 tvg-id="193" tvg-name="Живи" tvg-chno="324",Живи
+https://etm.etmedia.tv/Jivi/video.m3u8
+#EXTINF:-1 tvg-id="249" tvg-name="Лапки Live HD" tvg-chno="325",Лапки Live HD
+https://etm.etmedia.tv/lapki_live_hd/video.m3u8
+#EXTINF:-1 tvg-id="194" tvg-name="Русский роман HD" tvg-chno="326",Русский роман HD
+https://etm.etmedia.tv/russkij_roman_hd/video.m3u8
+#EXTINF:-1 tvg-id="195" tvg-name="История" tvg-chno="328",История
+https://etm.etmedia.tv/history/video.m3u8
+#EXTINF:-1 tvg-id="196" tvg-name="НСТ" tvg-chno="330",НСТ
+https://etm.etmedia.tv/nst/video.m3u8
+#EXTINF:-1 tvg-id="197" tvg-name="Техно 24" tvg-chno="332",Техно 24
+https://etm.etmedia.tv/tehno24/video.m3u8
+#EXTINF:-1 tvg-id="198" tvg-name="Plan B HD" tvg-chno="334",Plan B HD
+https://etm.etmedia.tv/plan_b_hd/video.m3u8
+#EXTINF:-1 tvg-id="199" tvg-name="Shot" tvg-chno="336",Shot
+https://etm.etmedia.tv/shot/video.m3u8
+#EXTINF:-1 tvg-id="200" tvg-name="Russian Extreme HD" tvg-chno="338",Russian Extreme HD
+https://etm.etmedia.tv/russian_extreme/video.m3u8
+#EXTINF:-1 tvg-id="257" tvg-name="Точка отрыва HD" tvg-chno="339",Точка отрыва HD
+https://etm.etmedia.tv/tochka_otryva_hd/video.m3u8
+#EXTINF:-1 tvg-id="201" tvg-name="Первый (СПб)" tvg-chno="340",Первый (СПб)
+https://etm.etmedia.tv/perviy_spb/video.m3u8
+#EXTINF:-1 tvg-id="202" tvg-name="Россия 1 (СПб)" tvg-chno="342",Россия 1 (СПб)
+https://etm.etmedia.tv/rossiya_1_spb/video.m3u8
+#EXTINF:-1 tvg-id="203" tvg-name="Матч ТВ (СПб)" tvg-chno="344",Матч ТВ (СПб)
+https://etm.etmedia.tv/match_tv_spb/video.m3u8
+#EXTINF:-1 tvg-id="204" tvg-name="НТВ (СПб)" tvg-chno="346",НТВ (СПб)
+https://etm.etmedia.tv/ntv_spb/video.m3u8
+#EXTINF:-1 tvg-id="245" tvg-name="Пятый канал (СПб)" tvg-chno="347",Пятый канал (СПб)
+https://etm.etmedia.tv/5th_spb/video.m3u8
+#EXTINF:-1 tvg-id="246" tvg-name="РЕН ТВ (СПб)" tvg-chno="348",РЕН ТВ (СПб)
+https://etm.etmedia.tv/ren_tv_spb/video.m3u8
+#EXTINF:-1 tvg-id="205" tvg-name="СТС (СПб)" tvg-chno="349",СТС (СПб)
+https://etm.etmedia.tv/sts_spb/video.m3u8
+#EXTINF:-1 tvg-id="206" tvg-name="Домашний (СПб)" tvg-chno="350",Домашний (СПб)
+https://etm.etmedia.tv/domashniy_spb/video.m3u8
+#EXTINF:-1 tvg-id="207" tvg-name="Мир (СПб)" tvg-chno="352",Мир (СПб)
+https://etm.etmedia.tv/mir_spb/video.m3u8
+#EXTINF:-1 tvg-id="208" tvg-name="ТНТ (СПб)" tvg-chno="354",ТНТ (СПб)
+https://etm.etmedia.tv/tnt_spb/video.m3u8
+#EXTINF:-1 tvg-id="209" tvg-name="Женский журнал HD (Women's Magazine)" tvg-chno="356",Женский журнал HD (Women's Magazine)
+https://etm.etmedia.tv/womens_magazine_hd/video.m3u8
+#EXTINF:-1 tvg-id="210" tvg-name="Big Planet HD" tvg-chno="358",Big Planet HD
+https://etm.etmedia.tv/big_planet_hd/video.m3u8
+#EXTINF:-1 tvg-id="211" tvg-name="A1 HD" tvg-chno="360",A1 HD
+https://etm.etmedia.tv/a1_hd/video.m3u8
+#EXTINF:-1 tvg-id="212" tvg-name="A2 HD" tvg-chno="362",A2 HD
+https://etm.etmedia.tv/a2_hd/video.m3u8
+#EXTINF:-1 tvg-id="221" tvg-name="СуперГерои (Канал Малыш) HD" tvg-chno="370",СуперГерои (Канал Малыш) HD
+https://etm.etmedia.tv/SuperGeroi/video.m3u8
+#EXTINF:-1 tvg-id="228" tvg-name="Победа HD" tvg-chno="380",Победа HD
+https://etm.etmedia.tv/pobeda_hd/video.m3u8
+#EXTINF:-1 tvg-id="244" tvg-name="Беларусь 24" tvg-chno="390",Беларусь 24
+https://etm.etmedia.tv/belarus_24/video.m3u8
+#EXTINF:-1 tvg-id="310" tvg-name="Fashion TV HD" tvg-chno="400",Fashion TV HD
+https://etm.etmedia.tv/fashion_hd/video.m3u8
+#EXTINF:-1 tvg-id="230" tvg-name="MAGNAT" tvg-chno="1001",MAGNAT
+https://etm.etmedia.tv/magnat/video.m3u8
+#EXTINF:-1 tvg-id="231" tvg-name="Zooпарк HD" tvg-chno="1002",Zooпарк HD
+https://etm.etmedia.tv/zoopark_hd/video.m3u8
+#EXTINF:-1 tvg-id="239" tvg-name="Вкус HD" tvg-chno="2004",Вкус HD
+https://etm.etmedia.tv/vkus/video.m3u8
+#EXTINF:-1 tvg-id="260" tvg-name="Благая весть HD" tvg-chno="3009",Благая весть HD
+https://etm.etmedia.tv/tbv/video.m3u8
+#EXTINF:-1 tvg-id="277" tvg-name="TVM Channel" tvg-chno="3014",TVM Channel
+https://etm.etmedia.tv/tvmchannel/video.m3u8
+#EXTINF:-1 tvg-id="278" tvg-name="НТВ Право" tvg-chno="3015",НТВ Право
+https://etm.etmedia.tv/ntv_pravo/video.m3u8
+#EXTINF:-1 tvg-id="279" tvg-name="НТВ Сериал HD" tvg-chno="3016",НТВ Сериал HD
+https://etm.etmedia.tv/ntv_serial_hd/video.m3u8
+#EXTINF:-1 tvg-id="280" tvg-name="НТВ Стиль HD" tvg-chno="3017",НТВ Стиль HD
+https://etm.etmedia.tv/ntv_stil_hd/video.m3u8
+#EXTINF:-1 tvg-id="281" tvg-name="НТВ Хит" tvg-chno="3018",НТВ Хит
+https://etm.etmedia.tv/ntv_hit/video.m3u8
+#EXTINF:-1 tvg-id="283" tvg-name="Живая природа HD" tvg-chno="3020",Живая природа HD
+https://etm.etmedia.tv/zhivaya_priroda_hd/video.m3u8
+#EXTINF:-1 tvg-id="284" tvg-name="HOME 4K" tvg-chno="3021",HOME 4K
+https://etm.etmedia.tv/home_4k/video.m3u8
