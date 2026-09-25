@@ -1,14 +1,10 @@
-import os
-import re
 import json
+import os
+import urllib.request
 from pathlib import Path
-from urllib.parse import urljoin
-
-from playwright.sync_api import sync_playwright
 
 CATALOG_URL = "https://tvplayer.etmedia.tv/tvipapi/json/channels.json"
-DEBUG_DIR = Path("debug")
-DEBUG_DIR.mkdir(exist_ok=True)
+OUTPUT = Path("ETMedia.m3u")
 
 AUTH = os.environ.get("ET_AUTH_TOKEN")
 PROFILE = os.environ.get("ET_PROFILE_UID")
@@ -17,89 +13,65 @@ DEVICE = os.environ.get("ET_DEVICE_UID")
 if not all([AUTH, PROFILE, DEVICE]):
     raise RuntimeError("Не заданы ET_AUTH_TOKEN / ET_PROFILE_UID / ET_DEVICE_UID")
 
-AUTH_HEADERS = {
+headers = {
     "auth-token": AUTH,
     "profile-uid": PROFILE,
     "device-uid": DEVICE,
+    "User-Agent": "ETMedia-GitHub-Updater/1.0",
+    "Referer": "https://tvplayer.etmedia.tv/web-player/",
 }
 
-def redact(text):
-    return re.sub(r'([?&]token=)[^&\s]+', r'\1<REDACTED>', text)
+req = urllib.request.Request(CATALOG_URL, headers=headers)
+with urllib.request.urlopen(req, timeout=60) as response:
+    if response.status != 200:
+        raise RuntimeError(f"channels.json HTTP {response.status}")
+    data = json.load(response)
 
-with sync_playwright() as p:
-    browser = p.chromium.launch(headless=True)
-    context = browser.new_context()
-
-    # Auth is used ONLY to obtain the channel catalog.
-    catalog_resp = context.request.get(
-        CATALOG_URL,
-        headers=AUTH_HEADERS,
-        timeout=60000,
+channels = data.get("response", {}).get("channels", [])
+if not isinstance(channels, list) or len(channels) < 150:
+    raise RuntimeError(
+        f"Получено подозрительно мало каналов: {len(channels) if isinstance(channels, list) else 0}"
     )
 
-    report = [
-        f"CATALOG_WITH_AUTH_STATUS={catalog_resp.status}",
-    ]
+lines = [
+    "#EXTM3U",
+    "#PLAYLIST:ET Media",
+]
 
-    data = catalog_resp.json()
-    channels = data.get("response", {}).get("channels", []) if isinstance(data, dict) else []
-    report.append(f"CHANNELS={len(channels)}")
-    report.append("")
-    report.append("=== MASTER PLAYLISTS WITHOUT AUTH ===")
+seen_ids = set()
+seen_urls = set()
 
-    for ch in channels[:10]:
-        title = ch.get("title", "")
-        master = ch.get("url", "")
-        if not master:
-            continue
+for ch in channels:
+    channel_id = ch.get("id")
+    title = str(ch.get("title") or "").strip()
+    number = ch.get("number")
+    url = str(ch.get("url") or "").strip()
 
-        try:
-            # Deliberately NO ET Media auth headers here.
-            r = context.request.get(
-                master,
-                headers={
-                    "Referer": "https://tvplayer.etmedia.tv/web-player/",
-                    "Origin": "https://tvplayer.etmedia.tv",
-                },
-                timeout=30000,
-            )
-            body = r.text()
-            report.append(
-                f"[{title}] MASTER_HTTP={r.status} "
-                f"URL={redact(master)} CONTENT_TYPE={r.headers.get('content-type','')}"
-            )
+    # We intentionally publish only the stable master playlist URL.
+    # No auth token is embedded in ETMedia.m3u.
+    if not title or not url:
+        continue
+    if "etm.etmedia.tv/" not in url or not url.endswith(".m3u8"):
+        continue
+    if channel_id in seen_ids or url in seen_urls:
+        continue
 
-            lines = [
-                x.strip()
-                for x in body.splitlines()
-                if x.strip() and not x.startswith("#")
-            ]
-            report.append(f"MASTER_VARIANTS={len(lines)}")
+    seen_ids.add(channel_id)
+    seen_urls.add(url)
 
-            # Test the first media playlist referenced by the master.
-            if lines:
-                child = urljoin(master, lines[0])
-                cr = context.request.get(
-                    child,
-                    headers={
-                        "Referer": "https://tvplayer.etmedia.tv/web-player/",
-                        "Origin": "https://tvplayer.etmedia.tv",
-                    },
-                    timeout=30000,
-                )
-                report.append(
-                    f"CHILD_HTTP={cr.status} "
-                    f"URL={redact(child)} CONTENT_TYPE={cr.headers.get('content-type','')}"
-                )
-                child_text = redact(cr.text()[:1000])
-                report.append(f"CHILD_BODY_HEAD={child_text}")
+    attrs = [f'tvg-id="{channel_id}"', f'tvg-name="{title.replace(chr(34), "&quot;")}"']
+    if number is not None:
+        attrs.append(f'tvg-chno="{number}"')
 
-        except Exception as e:
-            report.append(f"[{title}] ERROR={type(e).__name__}: {e}")
+    lines.append(f'#EXTINF:-1 {" ".join(attrs)},{title}')
+    lines.append(url)
 
-    (DEBUG_DIR / "public_probe.txt").write_text(
-        "\n".join(report), encoding="utf-8"
-    )
-    print("\n".join(report))
+if len(seen_urls) < 150:
+    raise RuntimeError(f"После фильтрации осталось только {len(seen_urls)} каналов")
 
-    browser.close()
+OUTPUT.write_text("\n".join(lines) + "\n", encoding="utf-8")
+
+print(f"Catalog channels: {len(channels)}")
+print(f"Playlist entries: {len(seen_urls)}")
+print(f"Written: {OUTPUT}")
+print("Authentication headers were used only for channels.json and are not written to the playlist.")
