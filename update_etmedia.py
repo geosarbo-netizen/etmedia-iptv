@@ -1,7 +1,7 @@
 import os
 import json
 from pathlib import Path
-from playwright.sync_api import sync_playwright
+from playwright.sync_api import sync_playwright, TimeoutError as PlaywrightTimeoutError
 
 BASE_URL = "https://tvplayer.etmedia.tv/web-player/#/tv"
 DEBUG_DIR = Path("debug")
@@ -14,7 +14,7 @@ device_uid = os.environ.get("ET_DEVICE_UID")
 if not all([token, profile_uid, device_uid]):
     raise RuntimeError("Не заданы ET_AUTH_TOKEN / ET_PROFILE_UID / ET_DEVICE_UID")
 
-def safe_text(s, limit=5000):
+def clean(s, limit=5000):
     s = (s or "").replace("\n", " ").replace("\r", " ")
     return " ".join(s.split())[:limit]
 
@@ -46,20 +46,83 @@ with sync_playwright() as p:
     page.goto(BASE_URL, wait_until="domcontentloaded", timeout=120000)
     page.wait_for_timeout(8000)
 
-    # The previous diagnostic proved that the app stops at the profile chooser.
-    # The page is Flutter-rendered, so normal DOM text selectors do not expose
-    # the profile tile. The screenshot shows the "DOM" profile at this fixed
-    # viewport near x=570, y=550. Click that tile once.
-    page.screenshot(path=str(DEBUG_DIR / "01_profiles_before.png"), full_page=True)
-    before_url = page.url
+    page.screenshot(path=str(DEBUG_DIR / "01_before_accessibility.png"), full_page=True)
 
-    page.mouse.click(570, 550)
-    page.wait_for_timeout(8000)
+    info = [
+        f"INITIAL_URL={page.url}",
+        f"INITIAL_TITLE={clean(page.title(), 500)}",
+    ]
 
-    after_url = page.url
-    page.screenshot(path=str(DEBUG_DIR / "02_after_profile_click.png"), full_page=True)
+    # Flutter Web initially exposes only a tiny "Enable accessibility"
+    # semantics placeholder. Clicking it makes the Flutter semantics tree
+    # available to Playwright.
+    accessibility = page.get_by_role(
+        "button", name="Enable accessibility", exact=True
+    )
 
-    # Authenticated catalog request, for diagnostics only.
+    info.append(f"ACCESSIBILITY_PLACEHOLDER_COUNT={accessibility.count()}")
+
+    if accessibility.count():
+        try:
+            accessibility.click(force=True, timeout=10000)
+            page.wait_for_timeout(3000)
+            info.append("ACCESSIBILITY_CLICK=SUCCESS")
+        except Exception as e:
+            info.append(f"ACCESSIBILITY_CLICK=FAIL: {type(e).__name__}: {e}")
+    else:
+        info.append("ACCESSIBILITY_CLICK=NOT_FOUND")
+
+    page.screenshot(path=str(DEBUG_DIR / "02_after_accessibility.png"), full_page=True)
+
+    # Dump the now-exposed Flutter semantics tree.
+    semantics = page.locator("flt-semantics")
+    info.append(f"SEMANTICS_COUNT={semantics.count()}")
+
+    info.append("")
+    info.append("=== FLUTTER SEMANTICS ===")
+    for i in range(min(500, semantics.count())):
+        el = semantics.nth(i)
+        try:
+            box = el.bounding_box()
+            aria = el.get_attribute("aria-label") or ""
+            role = el.get_attribute("role") or ""
+            text = clean(el.inner_text(timeout=1000), 300)
+            info.append(
+                f"{i+1}. text={text!r} aria={aria!r} role={role!r} box={box}"
+            )
+        except Exception:
+            pass
+
+    # Try to activate the DOM profile through the newly exposed semantics.
+    dom_candidates = [
+        page.get_by_text("DOM", exact=True),
+        page.locator('flt-semantics[aria-label="DOM"]'),
+    ]
+
+    clicked = False
+    for loc in dom_candidates:
+        try:
+            if loc.count():
+                info.append(f"DOM_CANDIDATE_COUNT={loc.count()}")
+                loc.first.click(force=True, timeout=10000)
+                clicked = True
+                info.append("DOM_PROFILE_CLICK=SUCCESS")
+                break
+        except Exception as e:
+            info.append(f"DOM_PROFILE_CLICK_ATTEMPT=FAIL: {type(e).__name__}: {e}")
+
+    if not clicked:
+        # Fallback: click the center of the visible DOM profile tile.
+        info.append("DOM_PROFILE_CLICK=FALLBACK_COORDINATE")
+        page.mouse.click(570, 550)
+
+    page.wait_for_timeout(10000)
+    page.screenshot(path=str(DEBUG_DIR / "03_after_dom_profile.png"), full_page=True)
+
+    info.append(f"AFTER_PROFILE_URL={page.url}")
+    info.append(f"AFTER_PROFILE_TITLE={clean(page.title(), 500)}")
+
+    # Correctly parse the actual API structure: response.channels.
     catalog = page.request.get(
         "https://tvplayer.etmedia.tv/tvipapi/json/channels.json",
         headers={
@@ -74,79 +137,37 @@ with sync_playwright() as p:
     catalog_preview = ""
     try:
         data = catalog.json()
-        if isinstance(data, list):
+        if isinstance(data, dict):
+            response = data.get("response")
+            if isinstance(response, dict) and isinstance(response.get("channels"), list):
+                channel_count = len(response["channels"])
+            elif isinstance(data.get("channels"), list):
+                channel_count = len(data["channels"])
+        elif isinstance(data, list):
             channel_count = len(data)
-        elif isinstance(data, dict):
-            for key in ("channels", "data", "items"):
-                if isinstance(data.get(key), list):
-                    channel_count = len(data[key])
-                    break
-        catalog_preview = json.dumps(data, ensure_ascii=False)[:1000]
+        catalog_preview = json.dumps(data, ensure_ascii=False)[:1500]
     except Exception:
-        catalog_preview = safe_text(catalog.text(), 1000)
+        catalog_preview = clean(catalog.text(), 1500)
 
-    info = [
-        f"BEFORE_URL={before_url}",
-        f"AFTER_PROFILE_CLICK_URL={after_url}",
-        f"PAGE_TITLE={safe_text(page.title(), 500)}",
+    info += [
+        "",
         f"CATALOG_HTTP_STATUS={catalog.status}",
         f"CATALOG_CHANNEL_COUNT={channel_count}",
         "",
         "=== BODY TEXT ===",
-        safe_text(page.locator("body").inner_text(timeout=15000), 5000),
-        "",
-        "=== VISIBLE SEMANTICS / CLICKABLE ELEMENTS ===",
-    ]
-
-    # Flutter's accessibility/semantics tree may expose elements after the
-    # profile click. Collect only visible text/labels, not page HTML or headers.
-    js = r"""
-    () => {
-      const selectors = [
-        'flt-semantics', 'flt-semantics-placeholder',
-        'button', 'a', '[role="button"]', '[role="link"]',
-        '[role="option"]', '[role="listitem"]'
-      ];
-      const nodes = Array.from(document.querySelectorAll(selectors.join(',')));
-      const out = [];
-      for (const el of nodes) {
-        const r = el.getBoundingClientRect();
-        const cs = getComputedStyle(el);
-        if (!r.width || !r.height || cs.display === 'none' ||
-            cs.visibility === 'hidden' || cs.opacity === '0') continue;
-        out.push({
-          tag: el.tagName.toLowerCase(),
-          text: (el.innerText || el.textContent || '').replace(/\\s+/g, ' ').trim().slice(0, 200),
-          aria: (el.getAttribute('aria-label') || '').slice(0, 200),
-          role: (el.getAttribute('role') || ''),
-          x: Math.round(r.x), y: Math.round(r.y),
-          w: Math.round(r.width), h: Math.round(r.height)
-        });
-      }
-      return out;
-    }
-    """
-    elements = page.evaluate(js)
-    for i, e in enumerate(elements[:500]):
-        info.append(
-            f"{i+1}. <{e['tag']}> text={e['text']!r} "
-            f"aria={e['aria']!r} role={e['role']!r} "
-            f"box=({e['x']},{e['y']},{e['w']},{e['h']})"
-        )
-
-    info += [
-        "",
-        "=== CATALOG PREVIEW (first 1000 chars) ===",
-        catalog_preview,
+        clean(page.locator("body").inner_text(timeout=15000), 5000),
         "",
         "=== M3U8 REQUESTS ===",
         *(sorted(set(stream_requests))[:100] or ["NONE"]),
+        "",
+        "=== CATALOG PREVIEW ===",
+        catalog_preview,
     ]
 
     (DEBUG_DIR / "debug_elements.txt").write_text(
         "\n".join(info), encoding="utf-8"
     )
 
-    print("\n".join(info[:120]))
+    print("\n".join(info[:180]))
     print("\nSaved diagnostic files to debug/")
     browser.close()
