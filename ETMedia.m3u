@@ -174,6 +174,8 @@ https://etm.etmedia.tv/bridge_hits/video.m3u8
 https://etm.etmedia.tv/bridge_shlyager/video.m3u8
 #EXTINF:-1 tvg-id="304" tvg-name="BRIDGE Deluxe HD" tvg-chno="168",BRIDGE Deluxe HD
 https://etm.etmedia.tv/bridge_deluxe/video.m3u8
+#EXTINF:-1 tvg-id="311" tvg-name="BRIDGE Фрэш HD" tvg-chno="169",BRIDGE Фрэш HD
+https://etm.etmedia.tv/bridge_fresh/video.m3u8
 #EXTINF:-1 tvg-id="115" tvg-name="RT Doc HD" tvg-chno="170",RT Doc HD
 https://etm.etmedia.tv/rt_d_hd/video.m3u8
 #EXTINF:-1 tvg-id="117" tvg-name="ЛДПР ТВ" tvg-chno="172",ЛДПР ТВ
@@ -390,3 +392,5 @@ https://etm.etmedia.tv/ntv_hit/video.m3u8
 https://etm.etmedia.tv/zhivaya_priroda_hd/video.m3u8
 #EXTINF:-1 tvg-id="284" tvg-name="HOME 4K" tvg-chno="3021",HOME 4K
 https://etm.etmedia.tv/home_4k/video.m3u8
+#EXTINF:-1 tvg-id="312" tvg-name="Клюква ТВ HD" tvg-chno="3228",Клюква ТВ HD
+https://etm.etmedia.tv/klukva/video.m3u8
