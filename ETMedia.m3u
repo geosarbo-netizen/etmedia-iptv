@@ -278,6 +278,10 @@ https://etm.etmedia.tv/kino_i_zhizn/video.m3u8
 https://etm.etmedia.tv/hd_life/video.m3u8
 #EXTINF:-1 tvg-id="287" tvg-name="LEOMAX24" tvg-chno="278",LEOMAX24
 https://etm.etmedia.tv/leomax24_hd/video.m3u8
+#EXTINF:-1 tvg-id="314" tvg-name="Start Air HD" tvg-chno="280",Start Air HD
+https://etm.etmedia.tv/start_air/video.m3u8
+#EXTINF:-1 tvg-id="315" tvg-name="Start World HD" tvg-chno="281",Start World HD
+https://etm.etmedia.tv/start_world/video.m3u8
 #EXTINF:-1 tvg-id="174" tvg-name="Flix Snip" tvg-chno="286",Flix Snip
 https://etm.etmedia.tv/flix_snip/video.m3u8
 #EXTINF:-1 tvg-id="175" tvg-name="Trace Sport Stars HD" tvg-chno="288",Trace Sport Stars HD
