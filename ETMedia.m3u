@@ -1,45 +1,45 @@
 #EXTM3U
 #PLAYLIST:ET Media
 #EXTINF:-1 tvg-id="10" tvg-name="Первый HD" tvg-chno="1",Первый HD
-https://etm.etmedia.tv/perviy_hd/index.m3u8
+https://etm.etmedia.tv/perviy_hd/video.m3u8
 #EXTINF:-1 tvg-id="12" tvg-name="Россия HD" tvg-chno="2",Россия HD
-https://etm.etmedia.tv/rossiya_hd/index.m3u8
+https://etm.etmedia.tv/rossiya_hd/video.m3u8
 #EXTINF:-1 tvg-id="51" tvg-name="Матч HD" tvg-chno="3",Матч HD
 https://etm.etmedia.tv/match_hd/video.m3u8
 #EXTINF:-1 tvg-id="52" tvg-name="НТВ" tvg-chno="4",НТВ
-https://etm.etmedia.tv/ntv/index.m3u8
+https://etm.etmedia.tv/ntv/video.m3u8
 #EXTINF:-1 tvg-id="53" tvg-name="Пятый канал HD" tvg-chno="5",Пятый канал HD
-https://etm.etmedia.tv/5th/index.m3u8
+https://etm.etmedia.tv/5th/video.m3u8
 #EXTINF:-1 tvg-id="54" tvg-name="Россия К" tvg-chno="6",Россия К
-https://etm.etmedia.tv/rossiya_k/index.m3u8
+https://etm.etmedia.tv/rossiya_k/video.m3u8
 #EXTINF:-1 tvg-id="55" tvg-name="Россия 24" tvg-chno="7",Россия 24
-https://etm.etmedia.tv/rossiya_24/index.m3u8
+https://etm.etmedia.tv/rossiya_24/video.m3u8
 #EXTINF:-1 tvg-id="56" tvg-name="Карусель" tvg-chno="8",Карусель
-https://etm.etmedia.tv/karusel/index.m3u8
+https://etm.etmedia.tv/karusel/video.m3u8
 #EXTINF:-1 tvg-id="47" tvg-name="ОТР" tvg-chno="9",ОТР
-https://etm.etmedia.tv/otr/index.m3u8
+https://etm.etmedia.tv/otr/video.m3u8
 #EXTINF:-1 tvg-id="153" tvg-name="ТВЦ" tvg-chno="10",ТВЦ
-https://etm.etmedia.tv/tvc/index.m3u8
+https://etm.etmedia.tv/tvc/video.m3u8
 #EXTINF:-1 tvg-id="57" tvg-name="РЕН ТВ HD" tvg-chno="11",РЕН ТВ HD
-https://etm.etmedia.tv/ren_tv/index.m3u8
+https://etm.etmedia.tv/ren_tv/video.m3u8
 #EXTINF:-1 tvg-id="58" tvg-name="Спас" tvg-chno="12",Спас
-https://etm.etmedia.tv/spas/index.m3u8
+https://etm.etmedia.tv/spas/video.m3u8
 #EXTINF:-1 tvg-id="59" tvg-name="СТС HD" tvg-chno="13",СТС HD
-https://etm.etmedia.tv/ctc_hd/index.m3u8
+https://etm.etmedia.tv/ctc_hd/video.m3u8
 #EXTINF:-1 tvg-id="61" tvg-name="Домашний HD" tvg-chno="14",Домашний HD
-https://etm.etmedia.tv/domashniy_hd/index.m3u8
+https://etm.etmedia.tv/domashniy_hd/video.m3u8
 #EXTINF:-1 tvg-id="62" tvg-name="ТВ3 HD" tvg-chno="15",ТВ3 HD
-https://etm.etmedia.tv/tv3/index.m3u8
+https://etm.etmedia.tv/tv3/video.m3u8
 #EXTINF:-1 tvg-id="63" tvg-name="Пятница HD" tvg-chno="16",Пятница HD
-https://etm.etmedia.tv/pyatnitsa/index.m3u8
+https://etm.etmedia.tv/pyatnitsa/video.m3u8
 #EXTINF:-1 tvg-id="64" tvg-name="Звезда" tvg-chno="17",Звезда
-https://etm.etmedia.tv/zvezda/index.m3u8
+https://etm.etmedia.tv/zvezda/video.m3u8
 #EXTINF:-1 tvg-id="65" tvg-name="Мир HD" tvg-chno="18",Мир HD
-https://etm.etmedia.tv/mir/index.m3u8
+https://etm.etmedia.tv/mir/video.m3u8
 #EXTINF:-1 tvg-id="66" tvg-name="ТНТ HD" tvg-chno="19",ТНТ HD
-https://etm.etmedia.tv/tnt/index.m3u8
+https://etm.etmedia.tv/tnt/video.m3u8
 #EXTINF:-1 tvg-id="67" tvg-name="Муз" tvg-chno="20",Муз
-https://etm.etmedia.tv/muz/index.m3u8
+https://etm.etmedia.tv/muz/video.m3u8
 #EXTINF:-1 tvg-id="100" tvg-name="Санкт-Петербург HD" tvg-chno="21",Санкт-Петербург HD
 https://etm.etmedia.tv/st_peterburg/video.m3u8
 #EXTINF:-1 tvg-id="273" tvg-name="Первый вегетарианский" tvg-chno="42",Первый вегетарианский
