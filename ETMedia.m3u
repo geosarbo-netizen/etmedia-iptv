@@ -276,7 +276,7 @@ https://etm.etmedia.tv/mashina_vremeni_hd/video.m3u8
 https://etm.etmedia.tv/kino_i_zhizn/video.m3u8
 #EXTINF:-1 tvg-id="170" tvg-name="ТОЧКА.РФ (HD Life)" tvg-chno="277",ТОЧКА.РФ (HD Life)
 https://etm.etmedia.tv/hd_life/video.m3u8
-#EXTINF:-1 tvg-id="287" tvg-name="LEOMAX24" tvg-chno="278",LEOMAX24
+#EXTINF:-1 tvg-id="287" tvg-name="LEOMAX24 HD" tvg-chno="278",LEOMAX24 HD
 https://etm.etmedia.tv/leomax24_hd/video.m3u8
 #EXTINF:-1 tvg-id="314" tvg-name="Start Air HD" tvg-chno="280",Start Air HD
 https://etm.etmedia.tv/start_air/video.m3u8
