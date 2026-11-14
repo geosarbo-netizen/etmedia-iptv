@@ -6,7 +6,7 @@ https://etm.etmedia.tv/perviy_hd/video.m3u8
 https://etm.etmedia.tv/rossiya_hd/video.m3u8
 #EXTINF:-1 tvg-id="51" tvg-name="Матч HD" tvg-chno="3",Матч HD
 https://etm.etmedia.tv/match_hd/video.m3u8
-#EXTINF:-1 tvg-id="52" tvg-name="НТВ" tvg-chno="4",НТВ
+#EXTINF:-1 tvg-id="52" tvg-name="НТВ HD" tvg-chno="4",НТВ HD
 https://etm.etmedia.tv/ntv/video.m3u8
 #EXTINF:-1 tvg-id="53" tvg-name="Пятый канал HD" tvg-chno="5",Пятый канал HD
 https://etm.etmedia.tv/5th/video.m3u8
